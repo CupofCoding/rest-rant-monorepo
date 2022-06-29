@@ -25,19 +25,39 @@ module.exports = (sequelize, DataTypes) => {
 //     underscored: true,
 //     modelName: 'User',
   
-    User.init({
-      userId: {
-        type: DataTypes.SMALLINT,
-        primaryKey: true,
-        autoIncrement: true
+//     User.init({
+//       userId: {
+//         type: DataTypes.SMALLINT,
+//         primaryKey: true,
+//         autoIncrement: true
 
-      },
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
-      email: DataTypes.STRING,
-      passwordDigest: DataTypes.STRING
+//       },
+//       firstName: DataTypes.STRING,
+//       lastName: DataTypes.STRING,
+//       email: DataTypes.STRING,
+//       passwordDigest: DataTypes.STRING
 // },
+      User.init({
+        userId: {
+          type: DataTypes.SMALLINT,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
+        email: DataTypes.STRING,
+        role: {
+            type: DataTypes.ENUM,
+            values: [
+              'reviewer',
+              'admin',
+            ],
+        },
+        passwordDigest: DataTypes.STRING
+      // },
   });
   return User;
 };
 
+
+  

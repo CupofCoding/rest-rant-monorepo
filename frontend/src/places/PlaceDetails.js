@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router"
 import CommentCard from './CommentCard'
 import NewCommentForm from "./NewCommentForm";
+import currentUser from '../contexts/CurrentUser.js'
 
 function PlaceDetails() {
 
@@ -94,12 +95,50 @@ function PlaceDetails() {
 				{stars} stars
 			</h3>
 		)
+	// 	comments = place.comments.map(comment => {
+	// 		return (
+	// 			<CommentCard key={comment.commentId} comment={comment} onDelete={() => deleteComment(comment)} />
+	// 		)
+	// 	})
+	// }
+
+	  
 		comments = place.comments.map(comment => {
 			return (
-				<CommentCard key={comment.commentId} comment={comment} onDelete={() => deleteComment(comment)} />
+				<CommentCard 
+					key={comment.commentId} 
+					comment={comment} 
+					onDelete={() => deleteComment(comment)} 
+				/>
 			)
 		})
 	}
+
+	let placeActions = null
+
+	if (currentUser?.role === 'admin') {
+		placeActions = (
+			<>
+				<a className="btn btn-warning" onClick={editPlace}>
+					Edit
+				</a>
+				<button type="submit" className="btn btn-danger" onClick={deletePlace}>
+					Delete
+				</button>
+			</>
+		)
+	}
+
+// return (
+// <main>
+// 	<div className="row">
+// 		Serving {place.cuisines}.
+// 		</h4>
+// 		<br />
+// 		{placeActions}
+// 		</div>
+// 	</div>
+
 
 
 	return (
@@ -125,9 +164,15 @@ function PlaceDetails() {
 						{place.name} has been serving {place.city}, {place.state} since {place.founded}.
 					</h3>
 					<h4>
+						{/* Serving {place.cuisines}. */}
 						Serving {place.cuisines}.
 					</h4>
 					<br />
+					{placeActions}
+					{/* </div>
+				</div>
+					</h4>
+					<br /> */}
 					<a className="btn btn-warning" onClick={editPlace}>
 						Edit
 					</a>{` `}
